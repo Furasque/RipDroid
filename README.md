@@ -5,5 +5,7 @@ This is a python script, made for threat intelligence purpose, to analyse data f
 
 ## How to run
 
-1. Install requirements
-`pip install -r requirements.txt`
+1. Install Android Platform Tools and install to path   
+[Link](https://developer.android.com/tools/releases/platform-tools?hl=fr)
+
+2. 
