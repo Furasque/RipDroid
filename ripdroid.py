@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
         
     
-    if all or argparse.Namespace(wifi=True):
+    if all or args.wifi:
         if(os.system(f"adb shell \"dumpsys wifi\" > {WIFI_FILE_NAME}") != 0):
             print("Please connect a phone via USB and make sure it is detected by ADB.")
             exit(1)
