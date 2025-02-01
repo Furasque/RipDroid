@@ -24,13 +24,18 @@ It can read accounts stored, as well as WiFi SSID
   
   
 ```
-usage: RipDroid [-h] [-a] [--account] [--wifi]
+usage: RipDroid [-h] [-a] [-r] [--account] [--wifi]
 
 An android forensic tool
 
 options:
-  -h, --help      show this help message and exit
-  -a, --all       Print the accounts, connectivity logs and WiFi SSID stored on the device
-  --account       Print the accounts stored on the device
-  --wifi          Print the stored WiFi SSID on the device
+  -h, --help  show this help message and exit
+  -a, --all   Print the accounts and WiFi SSID stored on the device
+  -r, --raw   Prints the raw informations from the file. If not set, prints the infos in a more readable way.
+  --account   Print the accounts stored on the device
+  --wifi      Print the stored WiFi SSID on the device, and WiFi Access Point Config
 ```
+
+> [!IMPORTANT]  
+> Only what the creator deemed important infos are printed out when the `--raw` option is not selected.
+> Some details are overlooked if not provided (For the accounts : only SSO not from google services are printed).
