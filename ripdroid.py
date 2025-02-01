@@ -2,6 +2,11 @@ import os
 import argparse
 
 
+
+
+
+
+
 if __name__ == "__main__":
 
     # Parser Logic
@@ -9,9 +14,8 @@ if __name__ == "__main__":
         prog="RipDroid",
         description="An android forensic tool"
     )
-    parser.add_argument('-a', '--all', action='store_true', help="Print the accounts, connectivity logs and WiFi SSID stored on the device")
+    parser.add_argument('-a', '--all', action='store_true', help="Print the accounts and WiFi SSID stored on the device")
     parser.add_argument('--account', action='store_true', help="Print the accounts stored on the device")
-    parser.add_argument('--connectivity', action='store_true', help="Print the connectivity log (Wifi/Cellular) the device")
     parser.add_argument('--wifi', action='store_true', help="Print the stored WiFi SSID on the device")
     args = parser.parse_args()
 
@@ -27,10 +31,6 @@ if __name__ == "__main__":
 
     if all or args.account:
         if(os.system("adb shell \"dumpsys account\" > ./data/account.txt") != 0):
-            print("Please connect a phone via USB and make sure it is detected by ADB.")
-    
-    if all or args.connectivity:
-        if(os.system("adb shell \"dumpsys connectivity\" > ./data/connectivity.txt") != 0):
             print("Please connect a phone via USB and make sure it is detected by ADB.")
     
     if all or argparse.Namespace(wifi=True):
