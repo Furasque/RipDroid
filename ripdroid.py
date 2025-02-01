@@ -5,9 +5,11 @@ import re
 
 ACCOUNT_FILE_NAME = "./data/account.txt"
 WIFI_FILE_NAME = "./data/wifi.txt"
+COLUMN_WIDTH = 40
 
 
-def print_raw_account_info_from_file() -> None:
+def print_account_info_from_file(raw : bool) -> None :
+
     print("--------------Accounts BEGIN--------------")
     with open(ACCOUNT_FILE_NAME, "r") as file:
         lines = file.readlines()
@@ -17,8 +19,14 @@ def print_raw_account_info_from_file() -> None:
             
             if match:
                 print(line)
-                for j in range(1, int(match.group(1))+1) :
-                    print(lines[i+j].strip()) 
+                for j in range(1, int(match.group(1))+1):
+                    if raw : 
+                        print(lines[i+j].strip())
+                    else:
+                        clean_line = re.sub(r'^Account \{name=|\}$', '', lines[i+j].strip())
+                        clean_line = re.sub(r", type=[a-z]{3}\.", "\tapp: ", clean_line)
+                        login, service = clean_line.split("\t")
+                        print(f"{login.ljust(COLUMN_WIDTH)}{service}")
     
     print("---------------Accounts END---------------\n")
     
@@ -32,10 +40,15 @@ def print_raw_account_info_from_file() -> None:
             
             if match:
                 print(line)
-                for j in range(1, int(match.group(1))+1) :
-                    print(lines[i+j].strip()) 
+                for j in range(1, int(match.group(1))+1):
+                    if raw:
+                        print(lines[i+j].strip()) 
+                    else:
+                        clean_line = re.sub(r'^ServiceInfo: AuthenticatorDescription {type=|\}.*$', '', lines[i+j].strip())
+                        print(clean_line)
     print("--------------Cached Auth END--------------\n")
     
+
     
     print("-------------SSO Signin BEGIN-------------")
     with open(ACCOUNT_FILE_NAME, "r") as file:
@@ -46,18 +59,15 @@ def print_raw_account_info_from_file() -> None:
             if re.search("^\s*Account visibility:", line):
                 match = True            
             if match:
-                print(line)
+                if '@' in line:
+                    print("")
+                if raw:
+                    print(line)
+                else:
+                    if not re.search("^\s*com.google", line) and not re.search("^\s*Account visibility:", line):
+                        print(line.split(',')[0])
+                    
     print("--------------SSO Signin END--------------\n")
-
-    
-    return
-
-def print_account_info_from_file(raw : bool) -> None :
-    if raw:
-        print_raw_account_info_from_file()
-        return
-    
-
     return
 
 
@@ -100,6 +110,3 @@ if __name__ == "__main__":
         if(os.system(f"adb shell \"dumpsys wifi\" > {WIFI_FILE_NAME}") != 0):
             print("Please connect a phone via USB and make sure it is detected by ADB.")
             exit(1)
-        
-
-    
