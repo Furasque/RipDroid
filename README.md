@@ -11,19 +11,23 @@ It can read accounts stored, as well as WiFi SSID
 //TODO
 
 
-## How to run
+## Installation
 
 1. Install Android Platform Tools and install to path   
 [Link](https://developer.android.com/tools/releases/platform-tools?hl=fr)
 
-2. Connect the android phone to your PC using a USB cable (and make sure Android Debug Bridge is activated)
+2. Clone the git repo
+`git clone https://github.com/Furasque/RipDroid.git`
 
-3. Run the script  
+3. Activate Android Debug Bridge, and connect it to your PC
+[Link](https://developer.android.com/studio/debug/dev-options#debugging)
+
+4. Run the script  
 `python ripdroid.py`
 
 
 
-## Options
+## Usage
 `python ripdroid.py -h`
   
   
@@ -43,3 +47,6 @@ options:
 > [!IMPORTANT]  
 > Only what the creator deemed important infos are printed out when the `--raw` option is not selected.
 > Some details are overlooked if not provided (For the accounts : only SSO not from google services are printed).
+
+## License
+This project is released under the [Unlicense](https://unlicense.org), placing it in the public domain. You are free to use, modify, and distribute it however you like, as long as you comply with applicable laws. While crediting the original author is appreciated, it is not required.
