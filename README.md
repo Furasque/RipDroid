@@ -1,10 +1,14 @@
 # RipDroid
+
+## Description
 RipDroid, a Forensic Android Data Extractor (wifi history extraction)
 
 This is a python script, made for threat intelligence purpose, to analyse data from an android phone with ADB enabled.
 
 It can read accounts stored, as well as WiFi SSID
 
+## Research made
+//TODO
 
 
 ## How to run
