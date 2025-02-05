@@ -15,7 +15,7 @@ def print_account_info_from_file(raw : bool) -> None :
         lines = file.readlines()
         for i, line in enumerate(lines):
             line = line.strip()
-            match = re.search("^\s*Accounts:\s*(\d+)", line)
+            match = re.search(r"^\s*Accounts:\s*(\d+)", line)
             
             if match:
                 print(line)
@@ -24,7 +24,7 @@ def print_account_info_from_file(raw : bool) -> None :
                         print(lines[i+j].strip())
                     else:
                         clean_line = re.sub(r'^Account \{name=|\}$', '', lines[i+j].strip())
-                        clean_line = re.sub(r", type=[a-z]{3}\.", "\tapp: ", clean_line)
+                        clean_line = re.sub(r", type=", "\tapp: ", clean_line)
                         login, service = clean_line.split("\t")
                         print(f"{login.ljust(COLUMN_WIDTH)}{service}")
     
@@ -36,7 +36,7 @@ def print_account_info_from_file(raw : bool) -> None :
         lines = file.readlines()
         for i, line in enumerate(lines):
             line = line.strip()
-            match = re.search("^\s*RegisteredServicesCache:\s*(\d+)", line)
+            match = re.search(r"^\s*RegisteredServicesCache:\s*(\d+)", line)
             
             if match:
                 print(line)
@@ -56,15 +56,17 @@ def print_account_info_from_file(raw : bool) -> None :
         match = False
         for i, line in enumerate(lines):
             line = line.strip()
-            if re.search("^\s*Account visibility:", line):
-                match = True            
+            if re.search(r"^\s*Account visibility:", line):
+                match = True
+            if line is "":
+                match = False           
             if match:
                 if '@' in line:
                     print("")
                 if raw:
                     print(line)
                 else:
-                    if not re.search("^\s*com.google", line) and not re.search("^\s*Account visibility:", line):
+                    if not re.search(r"^\s*com.google", line) and not re.search(r"^\s*Account visibility:", line) and not "Accounts" in line:
                         print(line.split(',')[0])
                     
     print("--------------SSO Signin END--------------\n")
