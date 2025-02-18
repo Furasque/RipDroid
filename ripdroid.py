@@ -105,7 +105,10 @@ def print_wifi_info_from_file(raw : bool) -> None :
 
             if line == "":
                 match = False
+            if "WifiApConfigStore config" in line:
+                match = True
 
+                
             if match:
                 if raw:
                     print(line)
@@ -113,8 +116,6 @@ def print_wifi_info_from_file(raw : bool) -> None :
                     clean_line = ""
                     print(clean_line)
             
-            if "WifiApConfigStore config" in line:
-                match = True
             
     print("---------------Wifi Hotspot settings END---------------")
 
