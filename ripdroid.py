@@ -58,7 +58,7 @@ def print_account_info_from_file(raw : bool) -> None :
             line = line.strip()
             if re.search(r"^\s*Account visibility:", line):
                 match = True
-            if line is "":
+            if line == "":
                 match = False           
             if match:
                 if '@' in line:
@@ -73,6 +73,50 @@ def print_account_info_from_file(raw : bool) -> None :
     return
 
 
+def print_wifi_info_from_file(raw : bool) -> None :
+    print("--------------Stored Wifi BEGIN--------------")
+    with open(WIFI_FILE_NAME, "r") as file:
+        lines = file.readlines()
+        match = False
+
+        for i, line in enumerate(lines):
+            line = line.strip()
+            
+            if "Configured networks End" in line:
+                match = False
+            if match:
+                if raw:
+                    print(line)  
+                else:
+                    clean_line = ""
+                    print(clean_line)
+            if "Configured networks Begin" in line:
+                match = True
+
+    print("---------------Stored Wifi END---------------")
+
+    print("--------------Wifi Hotspot settings BEGIN--------------")
+    with open(WIFI_FILE_NAME, "r") as file:
+        lines = file.readlines()
+        match = False
+
+        for i, line in enumerate(lines):
+            line = line.strip()
+
+            if line == "":
+                match = False
+
+            if match:
+                if raw:
+                    print(line)
+                else:
+                    clean_line = ""
+                    print(clean_line)
+            
+            if "WifiApConfigStore config" in line:
+                match = True
+            
+    print("---------------Wifi Hotspot settings END---------------")
 
 
 
@@ -112,3 +156,4 @@ if __name__ == "__main__":
         if(os.system(f"adb shell \"dumpsys wifi\" > {WIFI_FILE_NAME}") != 0):
             print("Please connect a phone via USB and make sure it is detected by ADB.")
             exit(1)
+        print_wifi_info_from_file(args.raw)
