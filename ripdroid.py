@@ -88,8 +88,18 @@ def print_wifi_info_from_file(raw : bool) -> None :
                 if raw:
                     print(line)  
                 else:
-                    clean_line = ""
-                    print(clean_line)
+                    keywords = ["SSID", "hasEverConnected", "hasNeverDetectedCaptivePortal", "hasEverValidatedInternetAccess", "macRandomizationSetting", "mRandomizedMacAddress", "KeyMgmt", "numRebootsSinceLastUse", "recentFailure"]
+
+                    if any(keyword in line for keyword in keywords):
+                        setting, value = line.split(":", 1)
+                        
+                        if "SSID" in value:
+                            value = re.search(r'\d+ SSID: ".*?"', value).group()
+                        
+                        if "ID" in setting:
+                            print("")
+                        print(f"{setting.ljust(COLUMN_WIDTH)}{value}") 
+                    
             if "Configured networks Begin" in line:
                 match = True
 
@@ -113,10 +123,14 @@ def print_wifi_info_from_file(raw : bool) -> None :
                 if raw:
                     print(line)
                 else:
-                    clean_line = ""
-                    print(clean_line)
-            
-            
+                    keywords = ["ssid", "passphrase", "client", "mac"]
+
+                    if any(keyword in line.lower() for keyword in keywords):
+                        setting, value = line.split('=')
+                        setting = setting.replace("WifiApConfigStore config: ", "")
+
+                        
+                        print(f"{setting.ljust(COLUMN_WIDTH)}{value}")         
     print("---------------Wifi Hotspot settings END---------------")
 
 
