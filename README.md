@@ -8,7 +8,11 @@ This is a python script, made for threat intelligence purpose, to analyse data f
 It can read accounts stored, as well as WiFi SSID
 
 ## Research made
-//TODO
+Google, ChatGPT, Forums & Android documentation
+https://stackoverflow.com/questions/31604610/how-to-test-wifi-connection-via-adb
+https://www.quora.com/How-can-I-check-wifi-history-and-access-it-through-android-phones
+https://developer.android.com/tools/dumpsys?hl=fr
+
 
 
 ## Installation
